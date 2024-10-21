@@ -1,5 +1,6 @@
 package com.example.hotwheelscollector;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,7 +9,10 @@ import android.view.View;
 import java.util.ArrayList;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+import androidx.annotation.Nullable;
+
 public class MainActivity extends AppCompatActivity {
+    private static final int ADD_ITEM_REQUEST = 1;
     private RecyclerView recyclerView;
     private ItemAdapter itemAdapter;
     private List<Item> itemList;
@@ -37,11 +41,28 @@ public class MainActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Agregar un nuevo item a la lista
-                itemList.add(new Item("Nuevo Item", 0.00, 1));
-                itemAdapter.notifyItemInserted(itemList.size() - 1);  // Notificar al adaptador que se ha agregado un nuevo elemento
-                recyclerView.scrollToPosition(itemList.size() - 1);  // Desplazar la vista al final de la lista
+                // Iniciar EditItemActivity para agregar un nuevo item
+                Intent intent = new Intent(MainActivity.this, AddItem.class);
+                startActivityForResult(intent, ADD_ITEM_REQUEST);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_ITEM_REQUEST && resultCode == RESULT_OK) {
+            // Obtener los datos del nuevo item
+            String name = data.getStringExtra("item_name");
+            double price = data.getDoubleExtra("item_price", 0.00);
+            int quantity = data.getIntExtra("item_quantity", 1);
+
+            // Crear un nuevo item y agregarlo a la lista
+            Item newItem = new Item(name, price, quantity);
+            itemList.add(newItem);
+            itemAdapter.notifyItemInserted(itemList.size() - 1);
+            recyclerView.scrollToPosition(itemList.size() - 1); // Desplazar la vista al último item agregado
+        }
     }
 }

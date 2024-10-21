@@ -4,4 +4,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_item">Add Item</string>
+    <string name="item_quantity">Item quantity</string>
+    <string name="save_item">Save Item</string>
+    <string name="item_price">Item Price</string>
+    <string name="item_name">Item Name</string>
 </resources>
