@@ -23,7 +23,8 @@
         android:text="NOMBRE"
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#FFFFFF"/>
 
     <!-- Botón Borrar -->
 
@@ -37,7 +38,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_quantity"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.956" />
+        app:layout_constraintVertical_bias="0.956"
+        android:textColor="#FFFFFF"/>
 
     <TextView
         android:id="@+id/item_quantity"
@@ -48,7 +50,8 @@
         android:text="CANTIDAD"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_name" />
+        app:layout_constraintTop_toBottomOf="@+id/item_name"
+        android:textColor="#FFFFFF"/>
 
     <Button
         android:id="@+id/btn_update"
@@ -58,7 +61,8 @@
         android:text="Update"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="#183bd9"/>
 
     <Button
         android:id="@+id/btn_delete"
@@ -69,6 +73,7 @@
         android:text="Delete"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_update" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_update"
+        android:backgroundTint="#183bd9"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
