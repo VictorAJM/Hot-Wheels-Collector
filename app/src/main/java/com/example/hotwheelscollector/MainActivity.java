@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Item> itemList;
     private Button btnAdd;
 
+    private DatabaseManager dbm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +29,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        dbm = new DatabaseManager(this);
+
         // Crear lista de ejemplo
         itemList = new ArrayList<>();
         itemList.add(new Item("Item 1", 10.99, 2));
         itemList.add(new Item("Item 2", 5.49, 5));
         itemList.add(new Item("Item 3", 3.99, 1));
         itemList.add(new Item("Item 4", 8.99, 3));
+
+        dbm.insertItem("Item 1", 2, 10.99);
 
         // Configurar el adaptador
         itemAdapter = new ItemAdapter(itemList, this);
