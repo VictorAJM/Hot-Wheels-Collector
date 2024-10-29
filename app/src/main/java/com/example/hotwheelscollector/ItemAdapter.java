@@ -1,5 +1,6 @@
 package com.example.hotwheelscollector;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +39,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         // Botón Actualizar
         holder.btnUpdate.setOnClickListener(v -> {
-            Toast.makeText(context, "Actualizar " + item.getName(), Toast.LENGTH_SHORT).show();
-            // Implementar la lógica de actualización aquí
+            Intent intent = new Intent(context, UpdateItem.class);
+            intent.putExtra("itemName", item.getName());
+            intent.putExtra("itemPrice", item.getPrice());
+            intent.putExtra("itemQuantity", item.getQuantity());
+            context.startActivity(intent);
         });
 
         // Botón Borrar
