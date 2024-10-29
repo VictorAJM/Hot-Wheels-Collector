@@ -3,6 +3,8 @@ package com.example.hotwheelscollector;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class UpdateItem extends AppCompatActivity {
@@ -34,14 +36,29 @@ public class UpdateItem extends AppCompatActivity {
 
         // Update confirmation button
         btnConfirmUpdate.setOnClickListener(v -> {
-            // Logic to update the item
-            String updatedName = editName.getText().toString();
-            double updatedPrice = Double.parseDouble(editPrice.getText().toString());
-            int updatedQuantity = Integer.parseInt(editQuantity.getText().toString());
+            String updatedName = editName.getText().toString().trim();
+            String updatedPriceText = editPrice.getText().toString().trim();
+            String updatedQuantityText = editQuantity.getText().toString().trim();
 
-            // Handle the update logic here (e.g., update in database)
+            // Validate non-empty fields
+            if (updatedName.isEmpty() || updatedPriceText.isEmpty() || updatedQuantityText.isEmpty()) {
+                Toast.makeText(UpdateItem.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            // Close the activity after updating
+            // Validate numeric values for price and quantity
+            double updatedPrice;
+            int updatedQuantity;
+            try {
+                updatedPrice = Double.parseDouble(updatedPriceText);
+                updatedQuantity = Integer.parseInt(updatedQuantityText);
+            } catch (NumberFormatException e) {
+                Toast.makeText(UpdateItem.this, "Please enter valid numbers for price and quantity.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // TODO: Actualizar en la DB:
+
             finish();
         });
 
