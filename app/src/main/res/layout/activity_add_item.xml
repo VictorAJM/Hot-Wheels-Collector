@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="#000000"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Campo de texto para el nombre del Item -->
+    <TextView
+        android:id="@+id/text_add_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add item"
+        android:textSize="40sp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
+
     <EditText
         android:id="@+id/edit_item_name"
         android:layout_width="0dp"
@@ -13,11 +26,12 @@
         android:autofillHints=""
         android:hint="@string/item_name"
         android:inputType="text"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_add_item"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        />
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"/>
 
     <!-- Campo de texto para el precio -->
     <EditText
@@ -30,7 +44,9 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_item_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"/>
 
     <!-- Campo de texto para la cantidad -->
     <EditText
@@ -43,7 +59,9 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_item_price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"/>
 
     <!-- Botón para confirmar -->
     <Button
@@ -54,7 +72,9 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_item_quantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#183bd9"/>
 
     <Button
         android:id="@+id/btn_return_home"
@@ -64,6 +84,8 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_item_quantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="75dp" />
+        android:layout_marginTop="75dp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#183bd9"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
