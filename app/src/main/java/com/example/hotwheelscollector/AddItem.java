@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AddItem extends AppCompatActivity {
     private EditText editName, editPrice, editQuantity;
     private Button btnSave;
+    private Button btnReturnHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +22,14 @@ public class AddItem extends AppCompatActivity {
         editPrice = findViewById(R.id.edit_item_price);
         editQuantity = findViewById(R.id.edit_item_quantity);
         btnSave = findViewById(R.id.btn_save_item);
+        btnReturnHome = findViewById(R.id.btn_return_home);
+
+        btnReturnHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                finish();
+            }
+        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override

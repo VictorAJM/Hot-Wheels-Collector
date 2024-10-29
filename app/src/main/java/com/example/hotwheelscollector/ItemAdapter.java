@@ -1,5 +1,7 @@
 package com.example.hotwheelscollector;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,15 +40,30 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         // Botón Actualizar
         holder.btnUpdate.setOnClickListener(v -> {
-            Toast.makeText(context, "Actualizar " + item.getName(), Toast.LENGTH_SHORT).show();
-            // Implementar la lógica de actualización aquí
+            Intent intent = new Intent(context, UpdateItem.class);
+            intent.putExtra("itemName", item.getName());
+            intent.putExtra("itemPrice", item.getPrice());
+            intent.putExtra("itemQuantity", item.getQuantity());
+            context.startActivity(intent);
         });
 
         // Botón Borrar
         holder.btnDelete.setOnClickListener(v -> {
-            Toast.makeText(context, "Borrar " + item.getName(), Toast.LENGTH_SHORT).show();
-            // Implementar la lógica de borrado aquí
+            new AlertDialog.Builder(context)
+                    .setTitle("Confirm Delete")
+                    .setMessage("Are you sure you want to delete " + item.getName() + "?")
+                    .setPositiveButton("Delete", (dialog, which) -> {
+                        // Implementar logica de borrado aqui:
+
+                        itemList.remove(position); // Remove item from the list
+                        notifyItemRemoved(position); // Notify adapter of item removal
+                        Toast.makeText(context, item.getName() + " deleted", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                    .create()
+                    .show();
         });
+
     }
 
     @Override
