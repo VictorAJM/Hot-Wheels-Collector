@@ -27,20 +27,19 @@
         android:contentDescription="Hot Wheels car image"
         android:paddingBottom="16dp"/>
 
-    <!-- RecyclerView for displaying items -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <!-- Add Button -->
     <Button
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Item"
         android:layout_gravity="center_horizontal"
-        android:backgroundTint="#183bd9"
-        android:textColor="#FFFFFF"/>
+        android:backgroundTint="#007d11"
+        android:textColor="#FFFFFF"
+        android:textSize="20.sp"/>
 </LinearLayout>
