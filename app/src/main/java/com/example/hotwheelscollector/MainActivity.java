@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import java.util.ArrayList;
@@ -38,7 +40,20 @@ public class MainActivity extends AppCompatActivity {
         itemList.add(new Item("Item 3", 3.99, 1));
         itemList.add(new Item("Item 4", 8.99, 3));
 
-        dbm.insertItem("Item 1", 2, 10.99);
+        //dbm.insertItem(new Item("Item 1", 10.99, 2));
+        //dbm.insertItem(new Item("Item 2", 5.49, 5));
+        //dbm.insertItem(new Item("Item 3", 3.99, 1));
+        //dbm.insertItem(new Item("Item 4", 8.99, 3));
+
+        ArrayList<Item> items = dbm.getItemList();
+        for(Item it: items){
+            Log.v("Item data", it.getId() + ": " + it.getName() + " $" + it.getPrice());
+        }
+        dbm.delete(2);
+        items = dbm.getItemList();
+        for(Item it: items){
+            Log.v("Item data", it.getId() + ": " + it.getName() + " $" + it.getPrice());
+        }
 
         // Configurar el adaptador
         itemAdapter = new ItemAdapter(itemList, this);

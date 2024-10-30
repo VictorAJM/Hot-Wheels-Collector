@@ -67,10 +67,36 @@ class DatabaseManager(context: Context) : SQLiteOpenHelper(
         )
     }
 
-    // TODO: Implement to get a list with all items in the DB
-    fun listItems(): ArrayList<Item>{
-        val itemList = ArrayList<Item>();
+    fun getItemList(): ArrayList<Item>{
+        val db = writableDatabase
+        val cur = db.query(
+            TABLE_NAME,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
 
+        val itemList = ArrayList<Item>();
+        while(cur.moveToNext()){
+            itemList.add(
+                Item(
+                    cur.getInt(0),
+                    cur.getString(1),
+                    cur.getDouble(3),
+                    cur.getInt(2)
+                )
+            )
+        }
+
+        cur.close()
         return itemList;
+    }
+
+    fun delete(id: Int){
+        val db = writableDatabase
+        db.delete(TABLE_NAME, "$COLUMN_ID = $id", null)
     }
 }
