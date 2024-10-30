@@ -5,11 +5,13 @@ public class Item {
     private String name;
     private double price;
     private int quantity;
+    private int itemPosition;
 
     public Item(String name, double price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.itemPosition = 0;
     }
 
     public Item(int id, String name, double price, int quantity) {
@@ -17,6 +19,7 @@ public class Item {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.itemPosition = 0;
     }
 
     // Getters y Setters
@@ -47,4 +50,7 @@ public class Item {
     public int getId() {
         return id;
     }
+
+    public int getItemPosition(){return itemPosition;}
+    public void setItemPosition(int position){this.itemPosition = position;}
 }

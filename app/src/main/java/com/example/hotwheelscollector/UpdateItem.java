@@ -1,5 +1,6 @@
 package com.example.hotwheelscollector;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ public class UpdateItem extends AppCompatActivity {
         btnReturnHome = findViewById(R.id.btn_return_home);
 
         // Get the passed item data
+        int id = getIntent().getIntExtra("itemId", 0);
         String name = getIntent().getStringExtra("itemName");
         double price = getIntent().getDoubleExtra("itemPrice", 0);
         int quantity = getIntent().getIntExtra("itemQuantity", 0);
@@ -57,8 +59,11 @@ public class UpdateItem extends AppCompatActivity {
                 return;
             }
 
-            // TODO: Actualizar en la DB:
+            DatabaseManager dbm = new DatabaseManager(this);
+            dbm.updateItem(new Item(id, updatedName, updatedPrice, updatedQuantity));
 
+            Intent resultIntent = new Intent();
+            setResult(RESULT_OK, resultIntent);
             finish();
         });
 

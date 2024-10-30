@@ -1,4 +1,5 @@
 package com.example.hotwheelscollector;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
-    private List<Item> itemList;
+    public List<Item> itemList;
     private Context context;
+    private DatabaseManager dbm;
 
     public ItemAdapter(List<Item> itemList, Context context) {
         this.itemList = itemList;
         this.context = context;
+        this.dbm = new DatabaseManager(context);
     }
 
     @NonNull
@@ -41,10 +44,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         // Botón Actualizar
         holder.btnUpdate.setOnClickListener(v -> {
             Intent intent = new Intent(context, UpdateItem.class);
+            intent.putExtra("itemId", item.getId());
             intent.putExtra("itemName", item.getName());
             intent.putExtra("itemPrice", item.getPrice());
             intent.putExtra("itemQuantity", item.getQuantity());
-            context.startActivity(intent);
+
+            ((Activity) context).startActivityForResult(intent, 2);
         });
 
         // Botón Borrar
@@ -53,10 +58,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     .setTitle("Confirm Delete")
                     .setMessage("Are you sure you want to delete " + item.getName() + "?")
                     .setPositiveButton("Delete", (dialog, which) -> {
-                        // Implementar logica de borrado aqui:
-
-                        itemList.remove(position); // Remove item from the list
-                        notifyItemRemoved(position); // Notify adapter of item removal
+                        dbm.delete(item.getId());
+                        updateItemList(true);
                         Toast.makeText(context, item.getName() + " deleted", Toast.LENGTH_SHORT).show();
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
@@ -82,6 +85,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             quantity = itemView.findViewById(R.id.item_quantity);
             btnUpdate = itemView.findViewById(R.id.btn_update);
             btnDelete = itemView.findViewById(R.id.btn_delete);
+        }
+    }
+
+    public void updateItemList(boolean notify){
+        itemList = dbm.getItemList();
+        if(notify) {
+            notifyDataSetChanged();
         }
     }
 }

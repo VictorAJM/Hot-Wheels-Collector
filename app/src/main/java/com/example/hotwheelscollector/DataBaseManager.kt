@@ -51,7 +51,7 @@ class DatabaseManager(context: Context) : SQLiteOpenHelper(
         return db.insert(TABLE_NAME, null, values)
     }
 
-    fun editItem(item: Item): Int{
+    fun updateItem(item: Item): Int{
         val values = ContentValues().apply {
             put(COLUMN_ITEM_NAME, item.name)
             put(COLUMN_QUANTITY, item.quantity)
@@ -62,7 +62,7 @@ class DatabaseManager(context: Context) : SQLiteOpenHelper(
         return db.update(
             TABLE_NAME,
             values,
-            "WHERE $COLUMN_ID=${item.id}",
+            "$COLUMN_ID=${item.id}",
             null
         )
     }

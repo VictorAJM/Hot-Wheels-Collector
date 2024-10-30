@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 
 public class MainActivity extends AppCompatActivity {
     private static final int ADD_ITEM_REQUEST = 1;
+    private static final int UPDATE_ITEM_REQUEST = 2;
     private RecyclerView recyclerView;
     private ItemAdapter itemAdapter;
     private List<Item> itemList;
@@ -32,30 +33,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         dbm = new DatabaseManager(this);
+        itemList = dbm.getItemList();
 
-        // Crear lista de ejemplo
-        itemList = new ArrayList<>();
-        itemList.add(new Item("Item 1", 10.99, 2));
-        itemList.add(new Item("Item 2", 5.49, 5));
-        itemList.add(new Item("Item 3", 3.99, 1));
-        itemList.add(new Item("Item 4", 8.99, 3));
-
-        //dbm.insertItem(new Item("Item 1", 10.99, 2));
-        //dbm.insertItem(new Item("Item 2", 5.49, 5));
-        //dbm.insertItem(new Item("Item 3", 3.99, 1));
-        //dbm.insertItem(new Item("Item 4", 8.99, 3));
-
-        ArrayList<Item> items = dbm.getItemList();
-        for(Item it: items){
-            Log.v("Item data", it.getId() + ": " + it.getName() + " $" + it.getPrice());
-        }
-        dbm.delete(2);
-        items = dbm.getItemList();
-        for(Item it: items){
-            Log.v("Item data", it.getId() + ": " + it.getName() + " $" + it.getPrice());
-        }
-
-        // Configurar el adaptador
         itemAdapter = new ItemAdapter(itemList, this);
         recyclerView.setAdapter(itemAdapter);
 
@@ -73,17 +52,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_ITEM_REQUEST && resultCode == RESULT_OK) {
-            // Obtener los datos del nuevo item
+        if (requestCode == ADD_ITEM_REQUEST && resultCode == RESULT_OK && data != null) {
             String name = data.getStringExtra("item_name");
             double price = data.getDoubleExtra("item_price", 0.00);
             int quantity = data.getIntExtra("item_quantity", 1);
 
-            // Crear un nuevo item y agregarlo a la lista
-            Item newItem = new Item(name, price, quantity);
-            itemList.add(newItem);
-            itemAdapter.notifyItemInserted(itemList.size() - 1);
-            recyclerView.scrollToPosition(itemList.size() - 1); // Desplazar la vista al último item agregado
+            dbm.insertItem(new Item(name, price, quantity));
+            itemAdapter.updateItemList(false);
+            itemAdapter.notifyItemInserted(itemAdapter.itemList.size() - 1);
+            recyclerView.scrollToPosition(itemAdapter.itemList.size() - 1);
+        }else if(requestCode == UPDATE_ITEM_REQUEST && resultCode == RESULT_OK && data != null){
+            itemAdapter.updateItemList(true);
         }
+
+        Log.v("Request code", requestCode+"  -> " + (resultCode==RESULT_OK));
     }
 }
