@@ -22,6 +22,7 @@ class DatabaseManager(context: Context) : SQLiteOpenHelper(
         private const val COLUMN_PRICE = "price"
     }
 
+    // Create table if it does not yet exist
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQuery = """
             CREATE TABLE $TABLE_NAME (
@@ -40,6 +41,7 @@ class DatabaseManager(context: Context) : SQLiteOpenHelper(
         onCreate(db)
     }
 
+    // Inset an item into the DB
     fun insertItem(item: Item): Long{
         val values = ContentValues().apply {
             put(COLUMN_ITEM_NAME, item.name)
@@ -51,6 +53,7 @@ class DatabaseManager(context: Context) : SQLiteOpenHelper(
         return db.insert(TABLE_NAME, null, values)
     }
 
+    // Update an already existing item based on its id
     fun updateItem(item: Item): Int{
         val values = ContentValues().apply {
             put(COLUMN_ITEM_NAME, item.name)
@@ -67,6 +70,7 @@ class DatabaseManager(context: Context) : SQLiteOpenHelper(
         )
     }
 
+    // Get a list of all the items on the DB
     fun getItemList(): ArrayList<Item>{
         val db = writableDatabase
         val cur = db.query(
@@ -95,6 +99,7 @@ class DatabaseManager(context: Context) : SQLiteOpenHelper(
         return itemList;
     }
 
+    // Delete an item based on its id
     fun delete(id: Int){
         val db = writableDatabase
         db.delete(TABLE_NAME, "$COLUMN_ID = $id", null)

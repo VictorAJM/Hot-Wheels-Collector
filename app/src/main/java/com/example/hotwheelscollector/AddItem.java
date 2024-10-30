@@ -39,22 +39,24 @@ public class AddItem extends AppCompatActivity {
                 String quantityString = editQuantity.getText().toString();
 
                 if (name.isEmpty() || priceString.isEmpty() || quantityString.isEmpty()) {
-                    Toast.makeText(AddItem.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            AddItem.this,
+                            "Please fill all the fields",
+                            Toast.LENGTH_SHORT
+                    ).show();
                     return;
                 }
 
                 double price = Double.parseDouble(priceString);
                 int quantity = Integer.parseInt(quantityString);
 
-                // Crear un Intent para devolver los datos
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("item_name", name);
                 resultIntent.putExtra("item_price", price);
                 resultIntent.putExtra("item_quantity", quantity);
 
-                // Devolver el resultado a la actividad anterior
                 setResult(RESULT_OK, resultIntent);
-                finish(); // Cerrar la actividad
+                finish();
             }
         });
     }

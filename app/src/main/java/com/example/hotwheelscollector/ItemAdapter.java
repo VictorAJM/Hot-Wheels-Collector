@@ -29,7 +29,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_carrito_widget, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.fragment_carrito_widget,
+                parent,
+                false
+        );
         return new ViewHolder(view);
     }
 
@@ -38,10 +42,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         Item item = itemList.get(position);
 
         holder.name.setText(item.getName());
-        holder.price.setText(String.valueOf(item.getPrice()));
+        holder.price.setText("$" + String.valueOf(item.getPrice()));
         holder.quantity.setText(String.valueOf(item.getQuantity()));
 
-        // Botón Actualizar
+        // Update button
         holder.btnUpdate.setOnClickListener(v -> {
             Intent intent = new Intent(context, UpdateItem.class);
             intent.putExtra("itemId", item.getId());
@@ -52,7 +56,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             ((Activity) context).startActivityForResult(intent, 2);
         });
 
-        // Botón Borrar
+        // Delete Button
         holder.btnDelete.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Confirm Delete")
@@ -60,7 +64,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     .setPositiveButton("Delete", (dialog, which) -> {
                         dbm.delete(item.getId());
                         updateItemList(true);
-                        Toast.makeText(context, item.getName() + " deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                                context,
+                                item.getName() + " deleted",
+                                Toast.LENGTH_SHORT
+                        ).show();
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                     .create()

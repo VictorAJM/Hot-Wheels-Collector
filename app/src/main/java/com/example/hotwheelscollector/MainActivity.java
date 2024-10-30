@@ -32,16 +32,18 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Database management
         dbm = new DatabaseManager(this);
         itemList = dbm.getItemList();
 
+        // Create recycler view from the data on the DB
         itemAdapter = new ItemAdapter(itemList, this);
         recyclerView.setAdapter(itemAdapter);
 
+        // AddItem button
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Iniciar EditItemActivity para agregar un nuevo item
                 Intent intent = new Intent(MainActivity.this, AddItem.class);
                 startActivityForResult(intent, ADD_ITEM_REQUEST);
             }
@@ -53,15 +55,20 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_ITEM_REQUEST && resultCode == RESULT_OK && data != null) {
+            // Add item succeeded
             String name = data.getStringExtra("item_name");
             double price = data.getDoubleExtra("item_price", 0.00);
             int quantity = data.getIntExtra("item_quantity", 1);
 
+            // Insert new item
             dbm.insertItem(new Item(name, price, quantity));
+
+            // Refresh Recycler view content
             itemAdapter.updateItemList(false);
             itemAdapter.notifyItemInserted(itemAdapter.itemList.size() - 1);
             recyclerView.scrollToPosition(itemAdapter.itemList.size() - 1);
         }else if(requestCode == UPDATE_ITEM_REQUEST && resultCode == RESULT_OK && data != null){
+            // Updated item
             itemAdapter.updateItemList(true);
         }
 
