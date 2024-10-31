@@ -43,7 +43,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         holder.name.setText(item.getName());
         holder.price.setText("$" + String.valueOf(item.getPrice()));
-        holder.quantity.setText(String.valueOf(item.getQuantity()));
+        holder.quantity.setText("Quantity: "+ String.valueOf(item.getQuantity()));
 
         // Update button
         holder.btnUpdate.setOnClickListener(v -> {
